@@ -37,8 +37,9 @@ def dumpCommit1(u,commits,token):
   v = urllib2.urlopen(request).read()
   w = json.loads(v)
   if not w: return False
-  data=[]
+  
   for commit in w:
+    #data=[]  
     sha = commit['sha']
     user = commit['author']['login']
     time = secs(commit['commit']['author']['date'])
@@ -47,6 +48,8 @@ def dumpCommit1(u,commits,token):
                 user = user,
                 time = time,
                 message = message)
+    data = commits.get(sha)
+    if not data: data = []
     data.append(commitObj)
     commits[sha]=data
   return True
@@ -56,7 +59,7 @@ def dumpComments1(u, comments, token):
   v = urllib2.urlopen(request).read()
   w = json.loads(v)
   if not w: return False
-  data=[]
+  #data=[]
   for comment in w:
     user = comment['user']['login']
     identifier = comment['id']
@@ -70,6 +73,8 @@ def dumpComments1(u, comments, token):
                 text = comment_text,
                 created_at = created_at,
                 updated_at = updated_at)
+    data = comments.get(identifier)
+    if not data: data = []	
     data.append(commentObj)
     comments[identifier]=data	
   return True
@@ -79,7 +84,7 @@ def dumpMilestone1(u, milestones, token):
   v = urllib2.urlopen(request).read()
   w = json.loads(v)
   if not w or ('message' in w and w['message'] == "Not Found"): return False
-  data=[]
+  #data=[]
   milestone = w
   identifier = milestone['id']
   milestone_id = milestone['number']
@@ -105,6 +110,8 @@ def dumpMilestone1(u, milestones, token):
 			   open_issues=open_issues,
 			   closed_issues=closed_issues,
 			   state=state)
+  data = milestones.get(identifier)
+  if not data: data = []  
   data.append(milestoneObj)
   milestones[identifier]=data
   return True
@@ -118,7 +125,7 @@ def dumpComments(u,comments, token):
     return False
  
 def dump1(u,issues):
-  token = "d0d8c54bac5904a4c02ae664bfb7374c0464def5" # <===
+  token = "xyz" # <===
   request = urllib2.Request(u, headers={"Authorization" : "token "+token})
   v = urllib2.urlopen(request).read()
   w = json.loads(v)
@@ -206,7 +213,7 @@ def launchDump():
   commits=dict()
   comments=dict()
   milestones=dict()
-  token = "d0d8c54bac5904a4c02ae664bfb7374c0464def5"
+  token = "xyz"
   repo="Arjun-Code-Knight/csc510-se-project"
   group="A"
   
