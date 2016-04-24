@@ -206,7 +206,7 @@ def launchDump():
   commits=dict()
   comments=dict()
   milestones=dict()
-  token = "d0d8c54bac5904a4c02ae664bfb7374c0464def5"
+  token = "xyz"
   repo="Arjun-Code-Knight/csc510-se-project"
   group="A"
   
